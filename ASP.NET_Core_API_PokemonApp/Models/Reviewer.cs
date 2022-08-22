@@ -1,5 +1,8 @@
 ﻿namespace ASP.NET_Core_API_PokemonApp.Models
 {
+    /// <summary>
+    /// Эксперт
+    /// </summary>
     public class Reviewer
     {
         public int Id { get; set; }
