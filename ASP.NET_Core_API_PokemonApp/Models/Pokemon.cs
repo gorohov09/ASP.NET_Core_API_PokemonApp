@@ -5,10 +5,24 @@
     /// </summary>
     public class Pokemon
     {
+        /// <summary>
+        /// Id
+        /// </summary>
         public int Id { get; set; }
 
+        /// <summary>
+        /// Имя
+        /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        /// Дата рождения
+        /// </summary>
         public DateTime BirthDate { get; set; }
+
+        /// <summary>
+        /// Отзывы
+        /// </summary>
+        public ICollection<Review> Reviews { get; set; }
     }
 }

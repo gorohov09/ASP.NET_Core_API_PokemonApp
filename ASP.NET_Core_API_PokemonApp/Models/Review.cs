@@ -19,5 +19,15 @@
         /// Текст отзыва
         /// </summary>
         public string Text { get; set; }
+
+        /// <summary>
+        /// Эксперт, который написал отзыв
+        /// </summary>
+        public Reviewer Reviewer { get; set; }
+
+        /// <summary>
+        /// Покемон, которому адресован отзыв
+        /// </summary>
+        public Pokemon Pokemon { get; set; }
     }
 }
