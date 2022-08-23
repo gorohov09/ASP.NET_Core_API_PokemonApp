@@ -24,5 +24,15 @@
         /// Отзывы
         /// </summary>
         public ICollection<Review> Reviews { get; set; }
+
+        /// <summary>
+        /// Промежуточная сущность PokemonCategory(many-to-many)
+        /// </summary>
+        public ICollection<PokemonCategory> PokemonCategories { get; set; }
+
+        /// <summary>
+        /// Промежуточная сущность PokemonOwners(many-to-many)
+        /// </summary>
+        public ICollection<PokemonOwner> PokemonOwners { get; set; }
     }
 }
