@@ -16,7 +16,23 @@ services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+services.AddTransient<Seed>();
+
 var app = builder.Build();
+
+if (args.Length == 1 && args[0].ToLower() == "seeddata")
+    SeedData(app);
+
+void SeedData(IHost app)
+{
+    var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
+
+    using (var scope = scopedFactory.CreateScope())
+    {
+        var service = scope.ServiceProvider.GetService<Seed>();
+        service.SeedDataContext();
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
