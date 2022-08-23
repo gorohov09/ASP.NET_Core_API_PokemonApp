@@ -21,6 +21,11 @@
         public string Text { get; set; }
 
         /// <summary>
+        /// Рейтинг
+        /// </summary>
+        public int Rating { get; set; } 
+
+        /// <summary>
         /// Эксперт, который написал отзыв
         /// </summary>
         public Reviewer Reviewer { get; set; }

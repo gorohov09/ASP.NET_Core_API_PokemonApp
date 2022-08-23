@@ -8,9 +8,14 @@
         public int Id { get; set; }
 
         /// <summary>
-        /// Название
+        /// Имя
         /// </summary>
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+
+        /// <summary>
+        /// Фамилия
+        /// </summary>
+        public string LastName { get; set; }
 
         public string Gym { get; set; }
 
