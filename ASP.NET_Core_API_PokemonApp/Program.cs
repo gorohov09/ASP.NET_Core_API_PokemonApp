@@ -1,4 +1,6 @@
 using ASP.NET_Core_API_PokemonApp.Data;
+using ASP.NET_Core_API_PokemonApp.Interfaces;
+using ASP.NET_Core_API_PokemonApp.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +19,7 @@ services.AddDbContext<DataContext>(options =>
 });
 
 services.AddTransient<Seed>();
+services.AddScoped<IPokemonRepository, PokemonRepository>();
 
 var app = builder.Build();
 
