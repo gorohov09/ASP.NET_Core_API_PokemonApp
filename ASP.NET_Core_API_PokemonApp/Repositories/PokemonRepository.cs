@@ -17,8 +17,14 @@ namespace ASP.NET_Core_API_PokemonApp.Repositories
             _context = context;
         }
 
-        public async Task<Pokemon> GetPokemon(int pokemonId) =>
-            await _context.Pokemons.Where(p => p.Id == pokemonId).FirstOrDefaultAsync();
+        public async Task<Pokemon> GetPokemon(int pokemonId) => await _context.Pokemons
+                .Include(pokemon => pokemon.Reviews)
+                .Include(pokemon => pokemon.PokemonOwners)
+                .ThenInclude(pokemonOwner => pokemonOwner.Owner)
+                .Where(p => p.Id == pokemonId)
+                .AsSplitQuery()
+                .FirstOrDefaultAsync();
+
 
         public async Task<Pokemon> GetPokemon(string name) =>
             await _context.Pokemons.Where(p => p.Name == name).FirstOrDefaultAsync();
