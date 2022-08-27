@@ -2,6 +2,7 @@ using ASP.NET_Core_API_PokemonApp.Data;
 using ASP.NET_Core_API_PokemonApp.Interfaces;
 using ASP.NET_Core_API_PokemonApp.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,7 @@ var services = builder.Services;
 services.AddControllers();
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
+services.AddAutoMapper(Assembly.GetEntryAssembly());
 
 services.AddDbContext<DataContext>(options =>
 {

@@ -1,5 +1,7 @@
-﻿using ASP.NET_Core_API_PokemonApp.Interfaces;
+﻿using ASP.NET_Core_API_PokemonApp.DTO;
+using ASP.NET_Core_API_PokemonApp.Interfaces;
 using ASP.NET_Core_API_PokemonApp.Models;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,9 +13,12 @@ namespace ASP.NET_Core_API_PokemonApp.Controllers
     {
         private readonly IPokemonRepository _pokemonRepository;
 
-        public PokemonController(IPokemonRepository pokemonRepository)
+        private readonly IMapper _mapper;
+
+        public PokemonController(IPokemonRepository pokemonRepository, IMapper mapper)
         {
             _pokemonRepository = pokemonRepository;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -23,9 +28,9 @@ namespace ASP.NET_Core_API_PokemonApp.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var pokemons = await _pokemonRepository.GetPokemons();
+            var pokemonsDTO = _mapper.Map<List<PokemonDTO>>(await _pokemonRepository.GetPokemons());
 
-            return Ok(pokemons);
+            return Ok(pokemonsDTO);
         }
 
         [HttpGet("{pokemonId}")]
@@ -39,9 +44,9 @@ namespace ASP.NET_Core_API_PokemonApp.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var pokemon = await _pokemonRepository.GetPokemon(pokemonId);
+            var pokemonDTO = _mapper.Map<PokemonDetailsDTO>(await _pokemonRepository.GetPokemon(pokemonId));
 
-            return Ok(pokemon);
+            return Ok(pokemonDTO);
         }
 
         [HttpGet("rating/{pokemonId}")]
