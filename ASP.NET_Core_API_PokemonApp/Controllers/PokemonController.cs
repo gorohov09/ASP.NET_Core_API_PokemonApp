@@ -22,7 +22,7 @@ namespace ASP.NET_Core_API_PokemonApp.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Pokemon>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<PokemonDTO>))]
         public async Task<IActionResult> GetPokemons()
         {
             if (!ModelState.IsValid)
@@ -34,7 +34,7 @@ namespace ASP.NET_Core_API_PokemonApp.Controllers
         }
 
         [HttpGet("{pokemonId}")]
-        [ProducesResponseType(200, Type = typeof(Pokemon))]
+        [ProducesResponseType(200, Type = typeof(PokemonDetailsDTO))]
         [ProducesResponseType(400)]
         public async Task<IActionResult> GetPokemonById(int pokemonId)
         {
@@ -44,7 +44,7 @@ namespace ASP.NET_Core_API_PokemonApp.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var pokemonDTO = _mapper.Map<PokemonDetailsDTO>(await _pokemonRepository.GetPokemon(pokemonId));
+            var pokemonDTO = _mapper.Map<PokemonDetailsDTO>(await _pokemonRepository.GetPokemonById(pokemonId));
 
             return Ok(pokemonDTO);
         }

@@ -6,9 +6,9 @@ namespace ASP.NET_Core_API_PokemonApp.Interfaces
     {
         Task<ICollection<Pokemon>> GetPokemons();
 
-        Task<Pokemon> GetPokemon(int pokemonId);
+        Task<Pokemon> GetPokemonById(int pokemonId);
 
-        Task<Pokemon> GetPokemon(string name);
+        Task<Pokemon> GetPokemonByName(string name);
 
         Task<decimal> GetPokemonRating(int pokemonId);
 

@@ -17,7 +17,7 @@ namespace ASP.NET_Core_API_PokemonApp.Repositories
             _context = context;
         }
 
-        public async Task<Pokemon> GetPokemon(int pokemonId) => await _context.Pokemons
+        public async Task<Pokemon> GetPokemonById(int pokemonId) => await _context.Pokemons
                 .Include(pokemon => pokemon.Reviews)
                 .Include(pokemon => pokemon.PokemonOwners)
                 .ThenInclude(pokemonOwner => pokemonOwner.Owner)
@@ -26,7 +26,7 @@ namespace ASP.NET_Core_API_PokemonApp.Repositories
                 .FirstOrDefaultAsync();
 
 
-        public async Task<Pokemon> GetPokemon(string name) =>
+        public async Task<Pokemon> GetPokemonByName(string name) =>
             await _context.Pokemons.Where(p => p.Name == name).FirstOrDefaultAsync();
 
         public async Task<decimal> GetPokemonRating(int pokemonId)

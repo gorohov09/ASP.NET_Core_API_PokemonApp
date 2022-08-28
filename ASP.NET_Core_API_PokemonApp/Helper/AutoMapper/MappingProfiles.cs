@@ -22,6 +22,8 @@ namespace ASP.NET_Core_API_PokemonApp.Helper.AutoMapper
             CreateMap<Review, ReviewDTO>()
                 .ReverseMap();
 
+            CreateMap<Category, CategoryDTO>()
+                .ReverseMap();
         }
     }
 }
