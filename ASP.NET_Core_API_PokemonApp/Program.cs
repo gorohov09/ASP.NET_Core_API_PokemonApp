@@ -24,6 +24,7 @@ services.AddTransient<Seed>();
 services.AddScoped<IPokemonRepository, PokemonRepository>();
 services.AddScoped<ICategoryRepository, CategoryRepository>();
 services.AddScoped<ICountryRepository, CountryRepository>();
+services.AddScoped<IOwnerRepository, OwnerRepository>();
 
 var app = builder.Build();
 
