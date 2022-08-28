@@ -23,6 +23,7 @@ services.AddDbContext<DataContext>(options =>
 services.AddTransient<Seed>();
 services.AddScoped<IPokemonRepository, PokemonRepository>();
 services.AddScoped<ICategoryRepository, CategoryRepository>();
+services.AddScoped<ICountryRepository, CountryRepository>();
 
 var app = builder.Build();
 
