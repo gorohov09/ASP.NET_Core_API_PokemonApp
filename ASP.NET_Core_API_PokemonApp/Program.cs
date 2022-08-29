@@ -25,6 +25,7 @@ services.AddScoped<IPokemonRepository, PokemonRepository>();
 services.AddScoped<ICategoryRepository, CategoryRepository>();
 services.AddScoped<ICountryRepository, CountryRepository>();
 services.AddScoped<IOwnerRepository, OwnerRepository>();
+services.AddScoped<IReviewRepository, ReviewRepository>();
 
 var app = builder.Build();
 
