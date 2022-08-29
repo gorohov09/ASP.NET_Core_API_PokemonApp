@@ -27,6 +27,9 @@ namespace ASP.NET_Core_API_PokemonApp.Helper.AutoMapper
 
             CreateMap<Country, CountryDTO>()
                 .ReverseMap();
+
+            CreateMap<Reviewer, ReviewerDTO>()
+                .ReverseMap();
         }
     }
 }

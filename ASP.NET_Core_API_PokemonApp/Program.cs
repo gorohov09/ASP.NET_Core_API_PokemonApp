@@ -26,6 +26,7 @@ services.AddScoped<ICategoryRepository, CategoryRepository>();
 services.AddScoped<ICountryRepository, CountryRepository>();
 services.AddScoped<IOwnerRepository, OwnerRepository>();
 services.AddScoped<IReviewRepository, ReviewRepository>();
+services.AddScoped<IReviewerRepository, ReviewerRepository>();
 
 var app = builder.Build();
 
