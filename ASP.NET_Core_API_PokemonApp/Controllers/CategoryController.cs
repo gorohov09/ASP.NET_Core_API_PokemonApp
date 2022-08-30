@@ -64,5 +64,58 @@ namespace ASP.NET_Core_API_PokemonApp.Controllers
 
             return Ok(pokemonsDTO);
         }
+
+        [HttpPost]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> CreateCategory([FromBody] CategoryDTO categoryCreate)
+        {
+            if (categoryCreate == null)
+                return BadRequest(ModelState);
+
+            var category = (await _categoryRepository.GetCategories())
+                .FirstOrDefault(c => c.Name.Trim().ToUpper() == categoryCreate.Name.Trim().ToUpper());
+
+            if (category != null)
+            {
+                ModelState.AddModelError("", "Category already exists");
+                return StatusCode(422, ModelState);
+            }
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var categoryMap = _mapper.Map<Category>(categoryCreate);
+
+            var result = await _categoryRepository.CreateCategory(categoryMap);
+
+            if (!result)
+            {
+                ModelState.AddModelError("", "Something went wrong while saving");
+                return StatusCode(500, ModelState);
+            }
+
+            return Ok(result);   
+        }
+
+        [HttpDelete("{categoryId}")]
+        public async Task<IActionResult> DeleteCategory(int categoryId)
+        {
+            if (!await _categoryRepository.CategoryExists(categoryId))
+                return NotFound();
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _categoryRepository.DeleteCategory(categoryId);
+
+            if (!result)
+            {
+                ModelState.AddModelError("", "Something went wrong while saving");
+                return StatusCode(500, ModelState);
+            }
+
+            return Ok(result);
+        }
     }
 }

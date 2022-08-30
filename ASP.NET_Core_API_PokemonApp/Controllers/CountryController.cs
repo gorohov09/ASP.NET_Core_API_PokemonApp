@@ -1,5 +1,6 @@
 ﻿using ASP.NET_Core_API_PokemonApp.DTO;
 using ASP.NET_Core_API_PokemonApp.Interfaces;
+using ASP.NET_Core_API_PokemonApp.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -75,6 +76,39 @@ namespace ASP.NET_Core_API_PokemonApp.Controllers
             var ownersDTO = _mapper.Map<List<OwnerDTO>>(await _countryRepository.GetOwnersFromCountry(countryId));
 
             return Ok(ownersDTO);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> CreateCountry([FromBody] CountryDTO countryCreate)
+        {
+            if (countryCreate == null)
+                return BadRequest(ModelState);
+
+            var country = (await _countryRepository.GetCountries())
+                .FirstOrDefault(c => c.Name.Trim().ToUpper() == countryCreate.Name.Trim().ToUpper());
+
+            if (country != null)
+            {
+                ModelState.AddModelError("", "Country already exists");
+                return StatusCode(422, ModelState);
+            }
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var countryMap = _mapper.Map<Country>(countryCreate);
+
+            var result = await _countryRepository.CreateCountry(countryMap);
+
+            if (!result)
+            {
+                ModelState.AddModelError("", "Something went wrong while saving");
+                return StatusCode(500, ModelState);
+            }
+
+            return Ok(result);
         }
     }
 }

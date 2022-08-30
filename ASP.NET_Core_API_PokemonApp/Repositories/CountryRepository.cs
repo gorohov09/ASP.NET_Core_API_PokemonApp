@@ -18,6 +18,12 @@ namespace ASP.NET_Core_API_PokemonApp.Repositories
         public async Task<bool> CountryExists(int countryId) =>
             await _context.Countries.AnyAsync(c => c.Id == countryId);
 
+        public async Task<bool> CreateCountry(Country country)
+        {
+            await _context.AddAsync(country);
+            return await Save();
+        }
+
         public async Task<ICollection<Country>> GetCountries() =>
             await _context.Countries.ToListAsync();
 
@@ -26,11 +32,17 @@ namespace ASP.NET_Core_API_PokemonApp.Repositories
 
         public async Task<Country> GetCountryByOwner(int ownerId) =>
             await _context.Owners
+            .Where(o => o.Id == ownerId)
             .Select(o => o.Country)
-            .FirstOrDefaultAsync(o => o.Id == ownerId);
-
+            .FirstOrDefaultAsync();
 
         public async Task<ICollection<Owner>> GetOwnersFromCountry(int countryId) =>
             await _context.Owners.Where(o => o.Country.Id == countryId).ToListAsync();
+
+        public async Task<bool> Save()
+        {
+            var saved = await _context.SaveChangesAsync();
+            return saved > 0 ? true : false;
+        }
     }
 }

@@ -13,5 +13,9 @@ namespace ASP.NET_Core_API_PokemonApp.Interfaces
         Task<ICollection<Owner>> GetOwnersFromCountry(int countryId);
 
         Task<bool> CountryExists(int countryId);
+
+        Task<bool> CreateCountry(Country country);
+
+        Task<bool> Save();
     }
 }

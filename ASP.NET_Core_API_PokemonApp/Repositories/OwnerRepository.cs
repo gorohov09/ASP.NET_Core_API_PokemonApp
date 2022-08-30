@@ -34,5 +34,17 @@ namespace ASP.NET_Core_API_PokemonApp.Repositories
 
         public async Task<bool> OwnerExists(int ownerId) =>
             await _context.Owners.AnyAsync(o => o.Id == ownerId);
+
+        public async Task<bool> CreateOwner(Owner owner)
+        {
+            await _context.AddAsync(owner);
+            return await Save();
+        }
+
+        public async Task<bool> Save()
+        {
+            var saved = await _context.SaveChangesAsync();
+            return saved > 0 ? true : false;
+        }
     }
 }

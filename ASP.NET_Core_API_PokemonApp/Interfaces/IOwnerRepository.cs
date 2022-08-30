@@ -13,5 +13,9 @@ namespace ASP.NET_Core_API_PokemonApp.Interfaces
         Task<ICollection<Pokemon>> GetPokemonsByOwner(int ownerId);
 
         Task<bool> OwnerExists(int ownerId);
+
+        Task<bool> CreateOwner(Owner owner);
+
+        Task<bool> Save();
     }
 }

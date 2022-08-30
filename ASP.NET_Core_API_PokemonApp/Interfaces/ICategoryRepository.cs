@@ -11,5 +11,11 @@ namespace ASP.NET_Core_API_PokemonApp.Interfaces
         Task<ICollection<Pokemon>> GetPokemonByCategory(int categoryId);
 
         Task<bool> CategoryExists(int categoryId);
+
+        Task<bool> CreateCategory(Category category);
+
+        Task<bool> DeleteCategory(int categoryid);
+
+        Task<bool> Save();
     }
 }
