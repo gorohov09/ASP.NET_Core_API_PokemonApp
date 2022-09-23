@@ -64,5 +64,33 @@ namespace ASP.NET_Core_API_PokemonApp.Controllers
 
             return Ok(pokemonRating);
         }
+
+        [HttpPost]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> CreatePokemon([FromQuery]int categoryId, [FromQuery]int ownerId, [FromBody] PokemonDTO pokemonCreate)
+        {
+            //У нас здесь такая сложная логика в контроллере, потому что некорректно это сувать в репозиторий
+            //Репозиторий нужен для взаимодействия с БД, никакой логики не должно быть
+            //А можно эту логику перенести в сервис? - Открытый вопрос
+
+            if (pokemonCreate == null)
+                return BadRequest(ModelState);
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var pokemonMap = _mapper.Map<Pokemon>(pokemonCreate);
+
+            var result = await _pokemonRepository.CreatePokemon(ownerId, categoryId, pokemonMap);
+
+            if (!result)
+            {
+                ModelState.AddModelError("", "There is no such pokemon");
+                return StatusCode(500, ModelState);
+            }
+
+            return Ok(result);
+        }
     }
 }

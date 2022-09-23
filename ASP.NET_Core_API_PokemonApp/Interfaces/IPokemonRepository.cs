@@ -13,5 +13,9 @@ namespace ASP.NET_Core_API_PokemonApp.Interfaces
         Task<decimal> GetPokemonRating(int pokemonId);
 
         Task<bool> PokemonExists(int pokemonId);
+
+        Task<bool> CreatePokemon(int ownerId, int categoryId, Pokemon pokemon);
+
+        Task<bool> Save();
     }
 }

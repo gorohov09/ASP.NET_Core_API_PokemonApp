@@ -17,6 +17,35 @@ namespace ASP.NET_Core_API_PokemonApp.Repositories
             _context = context;
         }
 
+        public async Task<bool> CreatePokemon(int ownerId, int categoryId, Pokemon pokemon)
+        {
+            var pokemonOwnerEntity = _context.Owners.FirstOrDefault(o => o.Id == ownerId);
+            var pokemonCategoryEntity = _context.Categories.FirstOrDefault(c => c.Id == categoryId);
+
+            if (pokemonOwnerEntity == null || pokemonCategoryEntity == null)
+                return false;
+
+            var pokemonOwner = new PokemonOwner()
+            {
+                Owner = pokemonOwnerEntity,
+                Pokemon = pokemon,
+            };
+
+            _context.Add(pokemonOwner);
+
+            var pokemonCategory = new PokemonCategory()
+            {
+                Category = pokemonCategoryEntity,
+                Pokemon = pokemon,
+            };
+
+            _context.Add(pokemonCategory);
+
+            _context.Add(pokemon);
+
+            return await Save();
+        }
+
         public async Task<Pokemon> GetPokemonById(int pokemonId) => await _context.Pokemons
                 .Include(pokemon => pokemon.Reviews)
                 .Include(pokemon => pokemon.PokemonOwners)
@@ -44,5 +73,11 @@ namespace ASP.NET_Core_API_PokemonApp.Repositories
 
         public async Task<bool> PokemonExists(int pokemonId) =>
             await _context.Pokemons.AnyAsync(p => p.Id == pokemonId);
+
+        public async Task<bool> Save()
+        {
+            var saved = await _context.SaveChangesAsync();
+            return saved > 0 ? true : false;
+        }
     }
 }

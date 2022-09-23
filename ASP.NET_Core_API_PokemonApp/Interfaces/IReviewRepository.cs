@@ -11,5 +11,7 @@ namespace ASP.NET_Core_API_PokemonApp.Interfaces
         Task<ICollection<Review>> GetReviewsOfPokemon(int pokemonId);
 
         Task<bool> ReviewExists(int reviewId);
+
+        Task<bool> CreateReview(Review review);
     }
 }

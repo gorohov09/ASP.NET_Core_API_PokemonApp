@@ -30,6 +30,9 @@ namespace ASP.NET_Core_API_PokemonApp.Helper.AutoMapper
 
             CreateMap<Reviewer, ReviewerDTO>()
                 .ReverseMap();
+
+            CreateMap<Reviewer, CreateReviewerDTO>()
+                .ReverseMap();
         }
     }
 }

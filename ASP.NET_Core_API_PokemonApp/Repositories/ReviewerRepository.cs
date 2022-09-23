@@ -14,6 +14,12 @@ namespace ASP.NET_Core_API_PokemonApp.Repositories
             _context = context;
         }
 
+        public async Task<bool> CreateReviewer(Reviewer reviewer)
+        {
+            await _context.AddAsync(reviewer);
+            return await Save();
+        }
+
         public async Task<Reviewer> GetReviewerById(int reviewerId) =>
             await _context.Reviewers
                 .Include(r => r.Reviews)
@@ -27,5 +33,11 @@ namespace ASP.NET_Core_API_PokemonApp.Repositories
 
         public async Task<bool> ReviewerExists(int reviewerId) =>
             await _context.Reviewers.AnyAsync(r => r.Id == reviewerId);
+
+        public async Task<bool> Save()
+        {
+            var saved = await _context.SaveChangesAsync();
+            return saved > 0 ? true : false;
+        }
     }
 }

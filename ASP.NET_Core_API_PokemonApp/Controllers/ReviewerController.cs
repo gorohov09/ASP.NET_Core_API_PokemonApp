@@ -1,5 +1,6 @@
 ﻿using ASP.NET_Core_API_PokemonApp.DTO;
 using ASP.NET_Core_API_PokemonApp.Interfaces;
+using ASP.NET_Core_API_PokemonApp.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -60,6 +61,21 @@ namespace ASP.NET_Core_API_PokemonApp.Controllers
             var reviewsDTO = _mapper.Map<List<ReviewDTO>>(await _reviewerRepository.GetReviewsByReviewer(reviewerId));
 
             return Ok(reviewsDTO);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> CreateReviewer([FromBody]CreateReviewerDTO reviewerCreate)
+        {
+            if (reviewerCreate == null)
+                return BadRequest(ModelState);
+
+            var reviewerMap = _mapper.Map<Reviewer>(reviewerCreate);
+
+            var result = await _reviewerRepository.CreateReviewer(reviewerMap);
+
+            return Ok(result);
         }
     }
 }
